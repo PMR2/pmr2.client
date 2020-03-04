@@ -5,7 +5,13 @@ import code
 import pdb
 import webbrowser
 
-from urllib import quote_plus
+try:
+    from urllib.parse import quote as quote_plus
+except ImportError:
+    # Assume Python 2
+    from urllib import quote_plus
+    input = raw_input
+
 from requests_oauthlib.oauth1_session import TokenRequestDenied
 
 try:
@@ -19,7 +25,7 @@ from pmr2.client import DemoAuthClient
 HOME = os.path.expanduser('~')
 CONFIG_FILENAME = os.path.join(HOME, '.pmr2clirc')
 
-PMR2ROOT = 'http://staging.physiomeproject.org'
+PMR2ROOT = 'https://staging.physiomeproject.org'
 CONSUMER_KEY = 'ovYoqjlJLrpCcEWcIFyxtqRS'
 CONSUMER_SECRET = 'fHssEYMWZzgo6JWUBh4l1bhd'
 DEFAULT_SCOPE = quote_plus(
@@ -57,7 +63,7 @@ class Cli(object):
         if isinstance(value, int):
             self._debug = value
 
-        if isinstance(value, basestring):
+        if isinstance(value, bytes):
             if value.lower() in ('false', 'no', '0',):
                 self._debug = 0
             else:
@@ -94,7 +100,7 @@ class Cli(object):
 
     def save_config(self, filename=CONFIG_FILENAME):
         try:
-            with open(filename, 'wb') as fd:
+            with open(filename, 'w') as fd:
                 json.dump(self.build_config(), fd)
         except IOError:
             print("Error saving configuration")
@@ -108,7 +114,7 @@ class Cli(object):
             return
         target = self.auth_client.authorization_url()
         webbrowser.open(target)
-        verifier = raw_input('Please enter the verifier: ')
+        verifier = input('Please enter the verifier: ')
         self.auth_client.set_verifier(verifier=verifier)
         token = self.auth_client.fetch_access_token()
         return True
@@ -208,7 +214,7 @@ class Cli(object):
     def shell(self):
         while self.active:
             try:
-                raw = raw_input('pmr2cli> ')
+                raw = input('pmr2cli> ')
                 if not raw:
                     continue
                 rawargs = raw.split(None, 1)
