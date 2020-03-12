@@ -5,7 +5,7 @@ from requests_oauthlib import OAuth1Session
 from oauthlib.common import unicode_type
 
 
-_PROTOCOL = 'application/vnd.physiome.pmr2.json.0'
+_PROTOCOL = 'application/vnd.physiome.pmr2.json.1'
 _UA = 'pmr2.client/0.0'
 
 
