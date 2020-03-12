@@ -25,7 +25,7 @@ from pmr2.client import DemoAuthClient
 HOME = os.path.expanduser('~')
 CONFIG_FILENAME = os.path.join(HOME, '.pmr2clirc')
 
-PMR2ROOT = 'https://staging.physiomeproject.org'
+PMR2ROOT = 'https://staging.physiomeproject.org/'
 CONSUMER_KEY = 'ovYoqjlJLrpCcEWcIFyxtqRS'
 CONSUMER_SECRET = 'fHssEYMWZzgo6JWUBh4l1bhd'
 DEFAULT_SCOPE = quote_plus(
