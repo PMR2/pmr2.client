@@ -115,7 +115,8 @@ class ClientTestCase(TestCase):
         client = Client('http://pmr.example.com', session)
         result = client()
 
-        self.assertEqual(result.keys(), ['workspace-home', 'workspace-add'])
+        self.assertEqual(
+            sorted(result.keys()), ['workspace-add', 'workspace-home'])
 
     def test_client_state(self):
         session = DummySession()

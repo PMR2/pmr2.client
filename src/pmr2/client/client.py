@@ -1,8 +1,10 @@
+import sys
 import json
 
 from requests import Session
 from requests_oauthlib import OAuth1Session
-from oauthlib.common import unicode_type
+
+unicode_type = str if sys.version_info[0] > 2 else unicode
 
 
 _PROTOCOL = 'application/vnd.physiome.pmr2.json.1'
